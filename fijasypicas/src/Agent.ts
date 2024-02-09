@@ -36,6 +36,12 @@ class Agent {
       return
     }
 
+    if (this.possibleNumbers.length === 0) {
+      console.log("That's impossible!. I think you made a mistake.")
+      this.won = true
+      return
+    }
+
     console.log("Possible numbers:", this.possibleNumbers.length)
     const nextGuess = this.possibleNumbers[0]
     this.lastGuess = nextGuess
