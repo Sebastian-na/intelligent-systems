@@ -14,7 +14,6 @@ async function main() {
   const agent = new Agent()
   agent.compute("start")
   while (!agent.won) {
-    console.log(agent.won)
     const input = (await prompt("Enter the perception: ")) as string
     const perception = {
       deads: parseInt(input[0]),

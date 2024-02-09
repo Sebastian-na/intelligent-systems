@@ -24,6 +24,7 @@ class Agent {
 
     if (perception.deads === 4) {
       console.log("The agent won!")
+      console.log("The number is:", this.lastGuess)
       this.won = true
       return
     }
