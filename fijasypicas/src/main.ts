@@ -12,13 +12,13 @@ main()
 
 async function main() {
   const agent = new Agent()
-  agent.compute("start")
+  agent.perceive("start")
   while (!agent.won) {
     const input = (await prompt("Enter the perception: ")) as string
     const perception = {
       deads: parseInt(input[0]),
       injured: parseInt(input[2]),
     }
-    agent.compute(perception)
+    agent.perceive(perception)
   }
 }

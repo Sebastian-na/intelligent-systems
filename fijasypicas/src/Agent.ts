@@ -1,4 +1,5 @@
 import { Perception } from "./interfaces"
+import calculateInjuredAndDeads from "./utils/calculateInjuredAndDeads"
 
 /**
  * This class represents the agent that will play the game.
@@ -9,18 +10,18 @@ import { Perception } from "./interfaces"
  * The injured are the digits that are in the wrong position but are part of the number.
  */
 class Agent {
-  private lastGuess: string = ""
+  public lastGuess: string = ""
   private possibleNumbers: string[] = []
   public won = false
+  public attempts = 0
 
-  public compute(perception: Perception | "start") {
+  public perceive(perception: Perception | "start") {
     if (perception === "start") {
       this.initialize()
-      console.log("Starting the agent...")
-      this.lastGuess = "0123"
-      console.log("Initial guess:", this.lastGuess)
       return
     }
+
+    this.attempts++
 
     if (perception.deads === 4) {
       console.log("The agent won!")
@@ -44,17 +45,21 @@ class Agent {
     }
 
     console.log("Possible numbers:", this.possibleNumbers.length)
-    const nextGuess = this.possibleNumbers[0]
+    const nextGuess = this.selectMostPromisingNumber()
     this.lastGuess = nextGuess
     console.log("Next guess:", nextGuess)
   }
 
   private initialize() {
     this.won = false
+    this.attempts = 0
     this.possibleNumbers = this.generatePossibleNumbers()
+    console.log("Starting the agent...")
+    this.lastGuess = "0123"
+    console.log("Initial guess:", this.lastGuess)
   }
 
-  private generatePossibleNumbers() {
+  public generatePossibleNumbers() {
     const numbers: string[] = []
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
@@ -89,6 +94,7 @@ class Agent {
    * as the given perception. It counts the number of digits in the guess that are
    * in the same position as the last guess. If the count is the same as the number of deads
    * in the perception, then the number is kept.
+   *
    * @returns
    */
   private filterPossibleDeads(
@@ -124,6 +130,10 @@ class Agent {
       }
       return count === perception.deads + perception.injured
     })
+  }
+
+  private selectMostPromisingNumber(): string {
+    return this.possibleNumbers[0]
   }
 }
 
