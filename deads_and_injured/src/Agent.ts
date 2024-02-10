@@ -133,7 +133,10 @@ class Agent {
   }
 
   private selectMostPromisingNumber(): string {
-    return this.possibleNumbers[0]
+    // Select random
+    return this.possibleNumbers[
+      Math.floor(Math.random() * this.possibleNumbers.length)
+    ]
   }
 }
 
